@@ -50,10 +50,10 @@
 
       // animação
       //
-      velocidade : 5,
-      timeout : null,
-      anima : true,
-      tempo : 100,
+      velocidade : 5, // quantos pixels o link anda por frame
+      timeout : null, // a função é armazenada aqui para ser desativada
+      anima : true, // se a função timeout deve ser ligada ou não
+      tempo : 100, // a cada quantos milisegundos a função timeout repete
     },
     teclado : [],
   }
@@ -86,6 +86,8 @@
       ? estado.heroi.quadro[ 4 ] = 0
       : estado.heroi.quadro[ 4 ] ++
 
+      // função recursiva desligável só pelo "clearTimeout()" na linha 120
+      //
       anima()
     },
     estado.heroi.tempo )
@@ -159,6 +161,8 @@
       {
         estado.heroi.anima = false
 
+        // usa a função da linha 81 para ligar o timeout que muda frames
+        //
         anima()
       }
     }
