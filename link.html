@@ -1,0 +1,200 @@
+
+<!doctype html>
+
+<head>
+  <title>mini</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <canvas width=600 height=400>
+    Seu navegador não suporta canvas :/
+  </canvas>
+  Mova com WASD
+</body>
+
+<style>
+  html, body{ background : #888; margin : 0 }
+  canvas{ background : #444 }
+</style>
+
+<script>
+
+  'use strict'
+
+  //............................................................................
+  // prepara os atores
+  //
+  var canvas = document.querySelector( 'canvas' )
+  var pincel = canvas.getContext( '2d' )
+  var imagem = new Image()
+
+  //............................................................................
+  // imagem original "https://tiozacdasgalaxias.deviantart.com/art/Link-Sprite-Sheet-662562870"
+  //
+  imagem.src = 'https://pre00.deviantart.net/ff7b/th/pre/i/2017/040/7/c/link_sprite_sheet_by_tiozacdasgalaxias-dayh0s6.png'
+
+  //............................................................................
+  // informações críticas do programa, por exemplo o arquivo "save" de um jogo
+  //
+  var estado =
+  {
+    heroi :
+    {
+      // geral
+      //
+      quadro : [ 0, 0, 96, 104, 0 ], // [ x, y, w, h, agora ]
+      real : [ 0, 0, 96, 104 ], // [ x, y, w, h ]
+      andando : false, // true ou false
+      olhando : 0, // 0 = baixo, 1 = esquerda, 2 = cima, 3 = direita
+
+      // animação
+      //
+      velocidade : 5,
+      timeout : null,
+      anima : true,
+      tempo : 100,
+    },
+    teclado : [],
+  }
+
+  //............................................................................
+  // eventos de teclado
+  //
+  onkeydown = evento =>
+  {
+    var index = estado.teclado.indexOf( evento.key )
+
+    if( index === -1 ) estado.teclado.push( evento.key )
+  }
+
+  onkeyup = evento =>
+  {
+    var index = estado.teclado.indexOf( evento.key )
+
+    estado.teclado.splice( index, 1 )
+  }
+
+  //............................................................................
+  // função que muda o frame da animação do link
+  //
+  var anima = _ =>
+  {
+    estado.heroi.timeout = setTimeout( _ =>
+    {
+      estado.heroi.quadro[ 4 ] + 1 > 9
+      ? estado.heroi.quadro[ 4 ] = 0
+      : estado.heroi.quadro[ 4 ] ++
+
+      anima()
+    },
+    estado.heroi.tempo )
+  }
+
+  //............................................................................
+  // loop principal do programa
+  //
+  var loop = _ =>
+  {
+    //..........................................................................
+    // limpa o canvas
+    //
+    pincel.clearRect( 0, 0, 600, 400 )
+
+    //..........................................................................
+    // confirma se o link está andando ou parado
+    //
+    if( estado.teclado.indexOf( 's' ) !== -1
+    || estado.teclado.indexOf( 'a' ) !== -1
+    || estado.teclado.indexOf( 'w' ) !== -1
+    || estado.teclado.indexOf( 'd' ) !== -1 )
+    {
+      estado.heroi.andando = true
+    }
+    else
+    {
+      estado.heroi.andando = false
+      estado.heroi.anima = true
+      clearTimeout( estado.heroi.timeout )
+    }
+
+    //..........................................................................
+    // confirma para onde o link está olhando
+    // também confirma X e Y da spritesheet para ilustrar funcionalidades
+    //
+    if( estado.teclado.indexOf( 's' ) !== -1 )
+    {
+      estado.heroi.real[ 1 ] += estado.heroi.velocidade // ilustrativo
+      estado.heroi.olhando = 0
+    }
+    else if( estado.teclado.indexOf( 'a' ) !== -1 )
+    {
+      estado.heroi.real[ 0 ] -= estado.heroi.velocidade // ilustrativo
+      estado.heroi.olhando = 1
+    }
+    else if( estado.teclado.indexOf( 'w' ) !== -1 )
+    {
+      estado.heroi.real[ 1 ] -= estado.heroi.velocidade // ilustrativo
+      estado.heroi.olhando = 2
+    }
+    else if( estado.teclado.indexOf( 'd' ) !== -1 )
+    {
+      estado.heroi.real[ 0 ] += estado.heroi.velocidade // ilustrativo
+      estado.heroi.olhando = 3
+    }
+
+    //..........................................................................
+    // atualiza animação (fileira do spritesheet)
+    //
+    var animacao = ( estado.heroi.andando ? 4 : 0 ) + estado.heroi.olhando
+
+    estado.heroi.quadro[ 1 ] = 104 * animacao
+
+    //..........................................................................
+    // atualiza frame da animação
+    //
+    if( estado.heroi.andando )
+    {
+      if( estado.heroi.anima )
+      {
+        estado.heroi.anima = false
+
+        anima()
+      }
+    }
+    else
+    {
+      estado.heroi.quadro[ 4 ] = 0
+    }
+
+    estado.heroi.quadro[ 0 ] = 96 * estado.heroi.quadro[ 4 ]
+
+    //..........................................................................
+    // desenha o link
+    //
+    pincel.drawImage
+    (
+      imagem,
+      estado.heroi.quadro[ 0 ],
+      estado.heroi.quadro[ 1 ],
+      estado.heroi.quadro[ 2 ],
+      estado.heroi.quadro[ 3 ],
+      estado.heroi.real[ 0 ],
+      estado.heroi.real[ 1 ],
+      estado.heroi.real[ 2 ],
+      estado.heroi.real[ 3 ],
+    )
+
+    //..........................................................................
+    // repete o loop
+    //
+    window.requestAnimationFrame( loop )
+  }
+
+  //............................................................................
+  // liga o programa
+  //
+  loop()
+
+</script>
+
