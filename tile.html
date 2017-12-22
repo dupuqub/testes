@@ -1,0 +1,90 @@
+
+<!doctype html>
+
+<head>
+  <title>mini</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <canvas width=800 height=500>
+    Seu navegador não suporta canvas :/
+  </canvas>
+</body>
+
+<style>
+  html, body{ background : #888; margin : 0 }
+  canvas{ background : #444 }
+</style>
+
+<script>
+
+  'use strict'
+
+  //............................................................................
+  // prepara os atores
+  //
+  var canvas = document.querySelector( 'canvas' )
+  var pincel = canvas.getContext( '2d' )
+  var tileset = new Image()
+  var mapa = new Image()
+  var matriz = // [x,y] de cada tile
+  [
+    [[0,0],[0,8],[0,8],[0,8]],
+    [[0,0],[0,0],[0,0],[0,0]],
+    [[0,0],[0,0],[9,7],[9,7]],
+    [[0,0],[0,13],[0,0],[21,0]],
+  ]
+
+  //............................................................................
+  // função que vai usar a matriz e o tileset para criar um novo mapa
+  // px_tile = tamanho do tile na imagem original em pixels
+  // px_final = tamanho do tile na tela em pixels
+  //
+  var criar_mapa = ( matriz, px_tile, px_final ) =>
+  {
+    var mapa_canvas = document.createElement( 'canvas' )
+    var mapa_pincel = mapa_canvas.getContext( '2d' )
+
+    mapa_canvas.width = matriz[ 0 ].length * px_final
+    mapa_canvas.height = matriz.length * px_final
+
+    matriz.forEach( ( fileira, $0 ) =>
+    {
+      fileira.forEach( ( tile, $1 ) =>
+      {
+        mapa_pincel.drawImage
+        (
+          tileset,
+          tile[ 0 ] * px_tile,
+          tile[ 1 ] * px_tile,
+          px_tile,
+          px_tile,
+          $1 * px_final,
+          $0 * px_final,
+          px_final,
+          px_final,
+        )
+      } )
+    } )
+
+    return mapa_canvas.toDataURL( 'image/png' )
+  }
+
+  //............................................................................
+  // imagem original "https://opengameart.org/content/the-field-of-the-floating-islands"
+  //
+  tileset.src = 'imagens/snow-expansion.png'
+
+  //............................................................................
+  // quando a tileset carregar, atualiza a origem do mapa
+  //
+  tileset.onload = _ => mapa.src = criar_mapa( matriz, 16, 64 )
+
+  //............................................................................
+  // quando o mapa carregar, desenha-o na tela
+  //
+  mapa.onload = _ => pincel.drawImage( mapa, 0, 0 )
+
+</script>
+
