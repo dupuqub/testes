@@ -1,0 +1,252 @@
+
+<!doctype html>
+
+<head>
+  <title>tile.html</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <canvas width=800 height=500>
+    Seu navegador não suporta canvas :/
+  </canvas>
+</body>
+
+<style>
+  html, body{ background : #888; margin : 0 }
+  canvas{ background : #444 }
+</style>
+
+<script>
+
+  'use strict'
+
+  //............................................................................
+  // prepara os atores
+  //
+  var canvas = document.querySelector( 'canvas' )
+  var pincel = canvas.getContext( '2d' )
+
+  var estado =
+  {
+    data : null,
+    teclado : [],
+    heroi :
+    {
+      x : 390,
+      y : 240,
+      w : 20, // width = largura
+      h : 20, // height = altura
+      vel : 7, // velocidade
+      dir : null, // direcao
+    },
+    paredes :
+    [
+      { x : 30, y : 50, w : 20, h : 600 },
+      { x : 100, y : 200, w : 10, h : 200 },
+      { x : 200, y : 400, w : 400, h : 20 },
+      { x : 300, y : 300, w : 40, h : 40 },
+      { x : 300, y : 100, w : 400, h : 40 },
+    ]
+  }
+
+  //............................................................................
+  // eventos de teclado
+  //
+  onkeydown = evento =>
+  {
+    var index = estado.teclado.indexOf( evento.key )
+    if( index === -1 ) estado.teclado.push( evento.key )
+  }
+  onkeyup = evento =>
+  {
+    var index = estado.teclado.indexOf( evento.key )
+    estado.teclado.splice( index, 1 )
+  }
+
+  //............................................................................
+  //
+  var loop = _ =>
+  {
+    //..........................................................................
+    // define direcao
+    //
+    estado.heroi.direcao =
+
+      estado.teclado.indexOf( 's' ) !== -1
+      ? 'v'
+      : estado.teclado.indexOf( 'a' ) !== -1
+      ? '<'
+      : estado.teclado.indexOf( 'w' ) !== -1
+      ? '^'
+      : estado.teclado.indexOf( 'd' ) !== -1
+      ? '>'
+      : null
+
+    //..........................................................................
+    // atualiza o estado . física do jogo
+    //
+    if( estado.heroi.direcao !== null )
+    {
+      //........................................................................
+      // BAIXO
+      //
+      if( estado.heroi.direcao === 'v' )
+      {
+        var heroi = estado.heroi
+        var proxima = 'ande'
+
+        estado.paredes.forEach( parede =>
+        {
+          if( parede.x < heroi.x + heroi.w && heroi.x < parede.x + parede.w )
+          {
+            if( parede.y === heroi.y + heroi.h ) proxima = 'pare'
+            else if( parede.y > heroi.y + heroi.h )
+            {
+              if( proxima === 'ande' ) proxima = parede
+              else if( parede.y < proxima.y ) proxima = parede
+            }
+          }
+        } )
+
+        proxima === 'ande'
+        ? estado.heroi.y += heroi.vel
+        : proxima === 'pare'
+        ? 0
+        : proxima.y >= heroi.y + heroi.h + heroi.vel
+        ? estado.heroi.y += heroi.vel
+        : estado.heroi.y = proxima.y - heroi.h
+      }
+
+      //........................................................................
+      // CIMA
+      //
+      else if( estado.heroi.direcao === '^' )
+      {
+        var heroi = estado.heroi
+        var proxima = 'ande'
+
+        estado.paredes.forEach( parede =>
+        {
+          if( parede.x < heroi.x + heroi.w && heroi.x < parede.x + parede.w )
+          {
+            if( parede.y + parede.h === heroi.y ) proxima = 'pare'
+            else if( parede.y + parede.h < heroi.y )
+            {
+              if( proxima === 'ande' ) proxima = parede
+              else if( parede.y > proxima.y ) proxima = parede
+            }
+          }
+        } )
+
+        proxima === 'ande'
+        ? estado.heroi.y -= heroi.vel
+        : proxima === 'pare'
+        ? 0
+        : proxima.y + proxima.h <= heroi.y - heroi.vel
+        ? estado.heroi.y -= heroi.vel
+        : estado.heroi.y = proxima.y + proxima.h
+      }
+
+      //........................................................................
+      // ESQUERDA
+      //
+      else if( estado.heroi.direcao === '<' )
+      {
+        var heroi = estado.heroi
+        var proxima = 'ande'
+
+        estado.paredes.forEach( parede =>
+        {
+          if( parede.y < heroi.y + heroi.h && heroi.y < parede.y + parede.h )
+          {
+            if( parede.x + parede.w === heroi.x ) proxima = 'pare'
+            else if( parede.x + parede.w < heroi.x )
+            {
+              if( proxima === 'ande' ) proxima = parede
+              else if( parede.x > proxima.x ) proxima = parede
+            }
+          }
+        } )
+
+        proxima === 'ande'
+        ? estado.heroi.x -= heroi.vel
+        : proxima === 'pare'
+        ? 0
+        : proxima.x + proxima.w <= heroi.x - heroi.vel
+        ? estado.heroi.x -= heroi.vel
+        : estado.heroi.x = proxima.x + proxima.w
+      }
+
+      //........................................................................
+      // DIREITA
+      //
+      if( estado.heroi.direcao === '>' )
+      {
+        var heroi = estado.heroi
+        var proxima = 'ande'
+
+        estado.paredes.forEach( parede =>
+        {
+          if( parede.y < heroi.y + heroi.h && heroi.y < parede.y + parede.h )
+          {
+            if( parede.x === heroi.x + heroi.w ) proxima = 'pare'
+            else if( parede.x > heroi.x + heroi.w )
+            {
+              if( proxima === 'ande' ) proxima = parede
+              else if( parede.x < proxima.x ) proxima = parede
+            }
+          }
+        } )
+
+        proxima === 'ande'
+        ? estado.heroi.x += heroi.vel
+        : proxima === 'pare'
+        ? 0
+        : proxima.x >= heroi.x + heroi.w + heroi.vel
+        ? estado.heroi.x += heroi.vel
+        : estado.heroi.x = proxima.x - heroi.w
+      }
+    }
+
+    //..........................................................................
+    // limpa a tela
+    //
+    pincel.clearRect( 0, 0, 800, 500 )
+
+    //..........................................................................
+    // desenha parede
+    //
+    estado.paredes.forEach( parede =>
+    {
+      pincel.fillStyle = '#C00'
+      pincel.fillRect( parede.x, parede.y, parede.w, parede.h )
+    } )
+
+    //..........................................................................
+    // desenha heroi
+    //
+    var heroi = estado.heroi
+
+    pincel.fillStyle = '#CCC'
+    pincel.fillRect( heroi.x, heroi.y, heroi.w, heroi.h )
+
+    //..........................................................................
+    // desenha fps
+    //
+    var data = Date.now()
+    var mensagem = 'FPS . ' + Math.floor( 1000 / ( data - estado.data ) )
+    estado.data = data
+
+    pincel.font = '20px sans'
+    pincel.fillText( mensagem, 10, 20 )
+
+    // repete o loop
+    //
+    window.requestAnimationFrame( loop )
+  }
+
+  loop()
+
+</script>
+
