@@ -27,7 +27,6 @@
   //
   var canvas = document.querySelector( 'canvas' )
   var pincel = canvas.getContext( '2d' )
-
   var estado =
   {
     data : null,
@@ -89,14 +88,14 @@
     //
     if( estado.heroi.direcao !== null )
     {
+      var heroi = estado.heroi
+      var proxima = 'ande'
+
       //........................................................................
       // BAIXO
       //
       if( estado.heroi.direcao === 'v' )
       {
-        var heroi = estado.heroi
-        var proxima = 'ande'
-
         estado.paredes.forEach( parede =>
         {
           if( parede.x < heroi.x + heroi.w && heroi.x < parede.x + parede.w )
@@ -125,9 +124,6 @@
       //
       else if( estado.heroi.direcao === '<' )
       {
-        var heroi = estado.heroi
-        var proxima = 'ande'
-
         estado.paredes.forEach( parede =>
         {
           if( parede.y < heroi.y + heroi.h && heroi.y < parede.y + parede.h )
@@ -156,9 +152,6 @@
       //
       else if( estado.heroi.direcao === '^' )
       {
-        var heroi = estado.heroi
-        var proxima = 'ande'
-
         estado.paredes.forEach( parede =>
         {
           if( parede.x < heroi.x + heroi.w && heroi.x < parede.x + parede.w )
@@ -187,9 +180,6 @@
       //
       else if( estado.heroi.direcao === '>' )
       {
-        var heroi = estado.heroi
-        var proxima = 'ande'
-
         estado.paredes.forEach( parede =>
         {
           if( parede.y < heroi.y + heroi.h && heroi.y < parede.y + parede.h )
