@@ -110,43 +110,14 @@
           }
         } )
 
-        proxima === 'ande'
-        ? estado.heroi.y += heroi.vel
-        : proxima === 'pare'
-        ? 0
-        : proxima.y >= heroi.y + heroi.h + heroi.vel
-        ? estado.heroi.y += heroi.vel
-        : estado.heroi.y = proxima.y - heroi.h
-      }
-
-      //........................................................................
-      // CIMA
-      //
-      else if( estado.heroi.direcao === '^' )
-      {
-        var heroi = estado.heroi
-        var proxima = 'ande'
-
-        estado.paredes.forEach( parede =>
+        if( proxima !== 'pare' )
         {
-          if( parede.x < heroi.x + heroi.w && heroi.x < parede.x + parede.w )
-          {
-            if( parede.y + parede.h === heroi.y ) proxima = 'pare'
-            else if( parede.y + parede.h < heroi.y )
-            {
-              if( proxima === 'ande' ) proxima = parede
-              else if( parede.y > proxima.y ) proxima = parede
-            }
-          }
-        } )
-
-        proxima === 'ande'
-        ? estado.heroi.y -= heroi.vel
-        : proxima === 'pare'
-        ? 0
-        : proxima.y + proxima.h <= heroi.y - heroi.vel
-        ? estado.heroi.y -= heroi.vel
-        : estado.heroi.y = proxima.y + proxima.h
+          proxima === 'ande'
+          ? estado.heroi.y += heroi.vel
+          : proxima.y >= heroi.y + heroi.h + heroi.vel
+          ? estado.heroi.y += heroi.vel
+          : estado.heroi.y = proxima.y - heroi.h
+        }
       }
 
       //........................................................................
@@ -170,19 +141,51 @@
           }
         } )
 
-        proxima === 'ande'
-        ? estado.heroi.x -= heroi.vel
-        : proxima === 'pare'
-        ? 0
-        : proxima.x + proxima.w <= heroi.x - heroi.vel
-        ? estado.heroi.x -= heroi.vel
-        : estado.heroi.x = proxima.x + proxima.w
+        if( proxima !== 'pare' )
+        {
+          proxima === 'ande'
+          ? estado.heroi.x -= heroi.vel
+          : proxima.x + proxima.w <= heroi.x - heroi.vel
+          ? estado.heroi.x -= heroi.vel
+          : estado.heroi.x = proxima.x + proxima.w
+        }
+      }
+
+      //........................................................................
+      // CIMA
+      //
+      else if( estado.heroi.direcao === '^' )
+      {
+        var heroi = estado.heroi
+        var proxima = 'ande'
+
+        estado.paredes.forEach( parede =>
+        {
+          if( parede.x < heroi.x + heroi.w && heroi.x < parede.x + parede.w )
+          {
+            if( parede.y + parede.h === heroi.y ) proxima = 'pare'
+            else if( parede.y + parede.h < heroi.y )
+            {
+              if( proxima === 'ande' ) proxima = parede
+              else if( parede.y > proxima.y ) proxima = parede
+            }
+          }
+        } )
+
+        if( proxima !== 'pare' )
+        {
+          proxima === 'ande'
+          ? estado.heroi.y -= heroi.vel
+          : proxima.y + proxima.h <= heroi.y - heroi.vel
+          ? estado.heroi.y -= heroi.vel
+          : estado.heroi.y = proxima.y + proxima.h
+        }
       }
 
       //........................................................................
       // DIREITA
       //
-      if( estado.heroi.direcao === '>' )
+      else if( estado.heroi.direcao === '>' )
       {
         var heroi = estado.heroi
         var proxima = 'ande'
@@ -199,14 +202,15 @@
             }
           }
         } )
-
-        proxima === 'ande'
-        ? estado.heroi.x += heroi.vel
-        : proxima === 'pare'
-        ? 0
-        : proxima.x >= heroi.x + heroi.w + heroi.vel
-        ? estado.heroi.x += heroi.vel
-        : estado.heroi.x = proxima.x - heroi.w
+        
+        if( proxima !== 'pare' )
+        {
+          proxima === 'ande'
+          ? estado.heroi.x += heroi.vel
+          : proxima.x >= heroi.x + heroi.w + heroi.vel
+          ? estado.heroi.x += heroi.vel
+          : estado.heroi.x = proxima.x - heroi.w
+        }
       }
     }
 
