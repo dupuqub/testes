@@ -103,8 +103,7 @@
             if( parede.y === heroi.y + heroi.h ) proxima = 'pare'
             else if( parede.y > heroi.y + heroi.h )
             {
-              if( proxima === 'ande' ) proxima = parede
-              else if( parede.y < proxima.y ) proxima = parede
+              if( proxima === 'ande' || parede.y < proxima.y ) proxima = parede
             }
           }
         } )
@@ -131,8 +130,7 @@
             if( parede.x + parede.w === heroi.x ) proxima = 'pare'
             else if( parede.x + parede.w < heroi.x )
             {
-              if( proxima === 'ande' ) proxima = parede
-              else if( parede.x > proxima.x ) proxima = parede
+              if( proxima === 'ande' || parede.x > proxima.x ) proxima = parede
             }
           }
         } )
@@ -159,8 +157,7 @@
             if( parede.y + parede.h === heroi.y ) proxima = 'pare'
             else if( parede.y + parede.h < heroi.y )
             {
-              if( proxima === 'ande' ) proxima = parede
-              else if( parede.y > proxima.y ) proxima = parede
+              if( proxima === 'ande' || parede.y > proxima.y ) proxima = parede
             }
           }
         } )
@@ -187,8 +184,7 @@
             if( parede.x === heroi.x + heroi.w ) proxima = 'pare'
             else if( parede.x > heroi.x + heroi.w )
             {
-              if( proxima === 'ande' ) proxima = parede
-              else if( parede.x < proxima.x ) proxima = parede
+              if( proxima === 'ande' || parede.x < proxima.x ) proxima = parede
             }
           }
         } )
