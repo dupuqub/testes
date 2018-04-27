@@ -11,6 +11,7 @@ body
   width      : var(--w) ;
   height     : var(--h) ;
   background : #444 ;
+  margin     : 0 ;
 }
 
 .center
