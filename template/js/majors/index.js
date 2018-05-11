@@ -1,15 +1,24 @@
 
-'use strict'
+`use strict`
 
 //......................................................................................................................
 
-onresize = () => P.screen.resize()
+onresize = () => P.resize()
 
 //......................................................................................................................
 
 P.begin = () =>
 {
-  P.screen.resize()
+  const resize = P.resize
+  const write = P.write
+  const html = P.html
+  const get = P.get
+  const name = P.state.view
+  const block = P.blocks.views[name]
+  const screen = get(`#screen`)
+
+  resize()
+  write(html(block)).at(screen)
 }
 
 //......................................................................................................................
