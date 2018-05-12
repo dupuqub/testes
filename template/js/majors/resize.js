@@ -5,15 +5,16 @@
 
 P.resize = () =>
 {
-  const get = P.get
+  const {reroot , write , html , get} = P
+
   const screen = P.info.screen
   const aspect = screen.aspect
 
   //....................................................................................................................
   // calculations
 
-  const space = { w : window.innerWidth , h : window.innerHeight }
-  const scale = { w : space.w / screen.w , h : space.h / screen.h }
+  const space = {w : window.innerWidth , h : window.innerHeight}
+  const scale = {w : space.w / screen.w , h : space.h / screen.h}
 
   const vertical = scale.w < scale.h
 
@@ -29,11 +30,9 @@ P.resize = () =>
   P.info.screen.type = space.w < space.h ? `portrait` : space.w > space.h ? `landscape` : `square`
 
   //....................................................................................................................
-  // change the body
 
-  const body = get(`body`)
+  reroot(width , height , unit)
 
-  body.style.width = width + `px`
-  body.style.height = height + `px`
+  //....................................................................................................................
 }
 

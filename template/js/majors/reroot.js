@@ -3,32 +3,30 @@
 
 //......................................................................................................................
 
-P.blocks.views.main = () =>
+P.reroot = (width , height , unit) =>
 {
   //....................................................................................................................
 
-  const block =
+  const newRoot = `--w : ${width}px ; --h : ${height}px ; --u : ${unit}px ;`
+
+  //....................................................................................................................
+
+  const rerooter = sheet =>
   {
-    id : `view` ,
-    classes : [`center` , `column`] ,
-    inner :
-    [
-      {
-        id : `new` ,
-        inner : `NEW` ,
-        classes : [`center` , `mainButton`] ,
-      } ,
-      {
-        id : `load` ,
-        inner : `LOAD` ,
-        classes : [`center` , `mainButton`] ,
-      } ,
-    ]
+    if (sheet.href !== null
+    && sheet.href.indexOf(`root.css`) !== - 1)
+    {
+      sheet.cssRules[0].style.cssText = newRoot
+
+      return true
+    }
   }
 
   //....................................................................................................................
 
-  return block
+  Array
+  .from(document.styleSheets)
+  .some(rerooter)
 
   //....................................................................................................................
 }

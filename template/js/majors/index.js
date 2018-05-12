@@ -9,16 +9,16 @@ onresize = () => P.resize()
 
 P.begin = () =>
 {
-  const resize = P.resize
-  const write = P.write
-  const html = P.html
-  const get = P.get
+  const {html , get , resize , write} = P
+
   const name = P.state.view
   const block = P.blocks.views[name]
-  const screen = get(`#screen`)
+  const final = html(block)
+  const box = get(`#box`)
 
   resize()
-  write(html(block)).at(screen)
+
+  write(final).at(box)
 }
 
 //......................................................................................................................
