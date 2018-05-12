@@ -3,11 +3,11 @@
 
 //......................................................................................................................
 
-P.html = block =>
+E.html = block =>
 {
   //....................................................................................................................
 
-  const {is , sum , html , concat} = P
+  const {is , sum , html , concat} = E
 
   const pass = item => item ? (item.length ? item.length > 0 : false) : false
   const attribute = item => ` ${item[0]}="${item[1]}"`
@@ -31,7 +31,9 @@ P.html = block =>
 
   const inner =
 
-      is(block.inner , `array`)
+    ! block.inner
+    ? ``
+    : is(block.inner , `array`)
     ? block.inner.map(html).reduce(sum)
     : is(block.inner , `object`)
     ? html(block.inner)

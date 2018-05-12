@@ -3,12 +3,12 @@
 
 //......................................................................................................................
 
-P.resize = () =>
+E.screen.resize = () =>
 {
   //....................................................................................................................
 
-  const {reroot , info} = P
-  const {screen} = info
+  const {reroot , reload} = E.screen
+  const {screen} = E.info
   const {aspect} = screen
 
   //....................................................................................................................
@@ -19,20 +19,21 @@ P.resize = () =>
 
   const vertical = scale.w < scale.h
 
-  const width = ! aspect ? screen.w : vertical ? space.w : scale.h * screen.w
-  const height = ! aspect ? screen.h : ! vertical ? space.h : scale.w * screen.h
-  const unit = ! aspect ? 1 : (width + height) / 2000
+  const w = ! aspect ? screen.w : vertical ? space.w : scale.h * screen.w
+  const h = ! aspect ? screen.h : ! vertical ? space.h : scale.w * screen.h
+  const u = ! aspect ? 1 : (w + h) / 2000
 
   //....................................................................................................................
   // store useful information for easy access
 
-  P.info.unit = unit
-  P.info.body = {width , height}
-  P.info.screen.type = space.w < space.h ? `portrait` : space.w > space.h ? `landscape` : `square`
+  E.info.unit = u
+  E.info.body = {w , h}
+  E.info.screen.type = space.w < space.h ? `portrait` : space.w > space.h ? `landscape` : `square`
 
   //....................................................................................................................
 
-  reroot(width , height , unit)
+  reroot(w , h , u)
+  reload()
 
   //....................................................................................................................
 }

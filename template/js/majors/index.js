@@ -3,34 +3,31 @@
 
 //......................................................................................................................
 
-onresize = () => P.resize()
+onresize = event => E.resize()
+onclick = event => E.click(event)
+onmousemove = event => E.hover(event)
 
 //......................................................................................................................
 
-P.begin = () =>
+E.begin = () =>
 {
-  const {html , get , resize , write , state , blocks} = P
-  const {views} = blocks
-  const {view} = state
+  E.state.view = `main`
 
-  const block = views[view]
-  const final = html(block)
-  const box = get(`#box`)
+  E.screen.resize()
+}
 
-  resize()
 
-  write(final).at(box)
+//......................................................................................................................
+
+E.loop = () =>
+{
+  E.listen.loop()
+
+  window.requestAnimationFrame(E.loop)
 }
 
 //......................................................................................................................
 
-P.loop = () =>
-{
-  window.requestAnimationFrame(P.loop)
-}
-
-//......................................................................................................................
-
-P.begin()
-P.loop()
+E.begin()
+E.loop()
 
