@@ -7,10 +7,9 @@ P.resize = () =>
 {
   //....................................................................................................................
 
-  const {reroot , write , html , get} = P
-
-  const screen = P.info.screen
-  const aspect = screen.aspect
+  const {reroot , info} = P
+  const {screen} = info
+  const {aspect} = screen
 
   //....................................................................................................................
   // calculations

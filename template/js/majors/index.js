@@ -9,10 +9,11 @@ onresize = () => P.resize()
 
 P.begin = () =>
 {
-  const {html , get , resize , write} = P
+  const {html , get , resize , write , state , blocks} = P
+  const {views} = blocks
+  const {view} = state
 
-  const name = P.state.view
-  const block = P.blocks.views[name]
+  const block = views[view]
   const final = html(block)
   const box = get(`#box`)
 
