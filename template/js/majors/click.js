@@ -10,7 +10,7 @@ E.click = event =>
 
   if (id === `new`)
   {
-    E.state.view = `editor`
+    E.state.view = `project`
   }
 }
 
