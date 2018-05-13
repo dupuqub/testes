@@ -3,7 +3,7 @@
 
 //......................................................................................................................
 
-onresize = event => E.screen.resize()
+onresize = event => E.ratio.resize()
 onclick = event => E.click(event)
 onmousemove = event => E.hover(event)
 
@@ -13,7 +13,7 @@ E.begin = () =>
 {
   E.state.view = `main`
 
-  E.screen.resize()
+  E.ratio.resize()
 }
 
 

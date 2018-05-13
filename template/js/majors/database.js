@@ -8,12 +8,11 @@ E.info =
   view : `` ,
   unit : 0 ,
   body : {w : 0 , h : 0} ,
-  screen :
+  ratio : // only needed if rendering is ratio-based
   {
-    type : `` , // `portrait`, `landscape` or `square`
-    aspect : true , // false gives pixel-based rendering
+    type : `` , // `portrait`, `landscape` or `square` (given by E.ratio.resize)
     w : 16 ,
-    h : 9
+    h : 9 ,
   } ,
 }
 

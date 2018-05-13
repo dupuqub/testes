@@ -17,7 +17,7 @@ E.listen.pool =
     active : true ,
     kill : false ,
     test : () => E.info.view !== E.state.view ,
-    act : () => E.screen.resize() ,
+    act : () => E.ratio.resize() ,
   } ,
 ]
 

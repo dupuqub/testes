@@ -3,7 +3,7 @@
 
 //......................................................................................................................
 
-E.screen.reload = () =>
+E.ratio.reload = () =>
 {
   const {html , get , write , state , blocks} = E
   const {views} = blocks

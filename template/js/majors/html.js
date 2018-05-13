@@ -31,7 +31,7 @@ E.html = block =>
 
   const inner =
 
-    ! block.inner
+      ! block.inner
     ? ``
     : is(block.inner , `array`)
     ? block.inner.map(html).reduce(sum)
