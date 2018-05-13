@@ -3,7 +3,7 @@
 
 //......................................................................................................................
 
-onresize = event => E.resize()
+onresize = event => E.screen.resize()
 onclick = event => E.click(event)
 onmousemove = event => E.hover(event)
 
