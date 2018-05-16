@@ -3,43 +3,49 @@
 
 //......................................................................................................................
 
-E.ratio.resize = () =>
+E.blocks.views.project = () =>
 {
   //....................................................................................................................
 
-  const {reroot , reload} = E.ratio
-  const {ratio} = E.info
+  const {stage} = E.info
 
   //....................................................................................................................
-  // calculations
 
-  const space = {w : window.innerWidth , h : window.innerHeight}
-  const scale = {w : space.w / ratio.w , h : space.h / ratio.h}
-
-  const vertical = scale.w < scale.h
-
-  const w = vertical ? space.w : scale.h * ratio.w
-  const h = ! vertical ? space.h : scale.w * ratio.h
-  const u = (w + h) / 2000
-
-  //....................................................................................................................
-  // store useful information for easy access
-
-  E.info.unit = u
-  E.info.body = {w , h}
-  E.info.ratio.type =
-
-      space.w < space.h
-    ? `portrait`
-    : space.w > space.h
-    ? `landscape`
-    : `square`
+  const block =
+  {
+    id : `view` ,
+    classes : [`center` , `column`] ,
+    inner :
+    [
+      {
+        type : `canvas` ,
+        others : [[`width` , stage.w] , [`height` , stage.h]] ,
+        inner : `your browser does not support canvas` ,
+      } ,
+    ] ,
+  }
 
   //....................................................................................................................
-  // complete
 
-  reroot(w , h , u)
-  reload()
+  const start = () =>
+  {
+    console.log(`project started`)
+  }
+
+  //....................................................................................................................
+
+  const loop =
+  {
+    id : `project` ,
+    run : () =>
+    {
+      console.log(`project running`)
+    } ,
+  }
+
+  //....................................................................................................................
+
+  return {block , start , loop}
 
   //....................................................................................................................
 }

@@ -2,6 +2,8 @@
 /*....................................................................................................................*/
 
 .column{flex-direction : column}
+.pointer{cursor : pointer}
+.bold{font-weight : bold}
 
 /*....................................................................................................................*/
 
@@ -21,8 +23,6 @@
   margin-bottom : 1% ;
   background : #333 ;
   color : #BBB ;
-  cursor : pointer ;
-  font-weight : bold ;
   transition : all 0.3s ;
   font-size : calc(var(--u) * 30) ;
   border-radius : calc(var(--u) * 5) ;

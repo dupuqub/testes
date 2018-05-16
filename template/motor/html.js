@@ -3,11 +3,11 @@
 
 //......................................................................................................................
 
-E.html = block =>
+M.html = block =>
 {
   //....................................................................................................................
 
-  const {is , sum , html , concat} = E
+  const {is , sum , html , concat} = M
 
   const pass = item => item ? (item.length ? item.length > 0 : false) : false
   const attribute = item => ` ${item[0]}="${item[1]}"`

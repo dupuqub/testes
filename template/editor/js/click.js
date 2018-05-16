@@ -1,15 +1,15 @@
 
-'use strict'
+`use strict`
 
 //......................................................................................................................
 
-const E =
+E.click = event =>
 {
-  blocks :
+  const {target} = event
+
+  if (target.id === `new`)
   {
-    views : {} ,
-  } ,
-  listen : {} ,
-  ratio : {} ,
+    M.stage.update(`project`)
+  }
 }
 

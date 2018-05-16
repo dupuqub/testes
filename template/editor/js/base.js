@@ -5,21 +5,14 @@
 
 E.info =
 {
-  view : `` ,
-  unit : 0 ,
-  body : {w : 0 , h : 0} ,
-  ratio : // only needed if rendering is ratio-based
-  {
-    type : `` , // `portrait`, `landscape` or `square` (given by E.ratio.resize)
-    w : 16 ,
-    h : 9 ,
-  } ,
+  stage : {w : 0 , h : 0 , unit : 0} ,
 }
 
 //......................................................................................................................
 
 E.state =
 {
+  stage : {w : 16 , h : 9 , aspect : true} ,
   view : `` ,
 }
 

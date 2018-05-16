@@ -3,18 +3,18 @@
 
 //......................................................................................................................
 
-E.get = query => document.querySelector(query)
-E.getAll = query => document.querySelectorAll(query)
-E.write = text => ({at : box => box.innerHTML = text})
+M.get = query => document.querySelector(query)
+M.getAll = query => document.querySelectorAll(query)
+M.write = text => ({at : box => box.innerHTML = text})
 
-E.random = (min , max) => Math.random() * (max - min) + min
-E.roll = (min , max) => Math.floor(E.random(min , max + 1))
-E.concat = link => (a , b) => a + link + b
-E.sum = (a , b) => a + b
+M.random = (min , max) => Math.random() * (max - min) + min
+M.roll = (min , max) => Math.floor(M.random(min , max + 1))
+M.concat = link => (a , b) => a + link + b
+M.sum = (a , b) => a + b
 
 //......................................................................................................................
 
-E.is = (item , type) =>
+M.is = (item , type) =>
 {
   const value =
 
@@ -26,7 +26,7 @@ E.is = (item , type) =>
     ? typeof item === `object` && ! item
     : item === null
     ? type === `null`
-    : E.is(item , `array`)
+    : M.is(item , `array`)
     ? type === `array`
     : typeof item === type
 

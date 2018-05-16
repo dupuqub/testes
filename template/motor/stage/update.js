@@ -1,34 +1,38 @@
 
-'use strict'
+`use strict`
 
 //......................................................................................................................
 
-E.listen.loop = () =>
+M.stage.update = viewId =>
 {
   //....................................................................................................................
 
-  const unused = item => ! item.used
-  const active = item => item.active
-  const tested = item => item.test()
-  const act = (item , index) =>
-  {
-    item.act()
-
-    if (item.kill) E.listen.pool[index].used = true
-  }
+  E.state.view = viewId
 
   //....................................................................................................................
-  // part 1 . act and mark as used
 
-  E.listen.pool
-  .filter(active)
-  .filter(tested)
-  .forEach(act)
+  const {calculate , reroot} = M.stage
+  const {stage} = E.state
+  const space = {w : window.innerWidth , h : window.innerHeight}
+  const newStage = calculate(stage , space)
 
+  reroot(newStage)
+
+  E.info.stage = newStage
+  
   //....................................................................................................................
-  // part 2 . destroy used
 
-  E.listen.pool = E.listen.pool.filter(unused)
+  const {html , get , write , is} = M
+  const {views} = E.blocks
+  const view = views[viewId]()
+  const {block , start , loop} = view
+  const text = html(block)
+  const box = get(`#stage`)
+
+  write(text).at(box)
+
+  if (is(start , `function`)) start()
+  if (is(loop , `object`)) E.loops.push(loop)
 
   //....................................................................................................................
 }
