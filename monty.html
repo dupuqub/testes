@@ -1,4 +1,17 @@
 
+<div id="sample"></div>
+<br>
+<div id="yes"></div>
+<div id="no"></div>
+<br>
+<div>refresh the page for another batch of results.</div>
+<div>please, check the code for more info.</div>
+<br>
+<div>I AM NOT AN EXPERT, but this is my best effort in providing some clarity on the matter.</div>
+<div>for a sample of 100000 (one hundred thousand) plays, you will observe there is a VERY BALANCED distribution of wins for both sides.</div>
+<div>this code is used to provide clear results not based on opinion, but on maths.</div>
+<div>if any concerns or bugs arise, please contact me. I would be pleased to fix my code and/or my math.</div>
+
 <script>
 
 // Monty Hall problem.
@@ -27,11 +40,8 @@ for(i = sample; i > 0; i --){
 	// console.log(doors + " . " + doors[first] + " . " + other_doors + " . " + other_doors[shown] + " . " + final_doors + " . " + change + " . " + final + " . car:" + doors[car] + " . winner:" + winner)
 }
 
-console.log("people that CHANGED and won:" + yes + "\npeople that DID NOT CHANGE and won:" + no)
-
-// I AM NOT AN EXPERT, but this is my best effort in providing some clarity on the matter.
-// for a sample of 100000 (one hundred thousand) plays, you will observe there is a VERY BALANCED distribution of wins for both sides.
-// this code is used to provide clear results not based on opinion, but on maths.
-// if any concerns or bugs arise, please contact me. I would be pleased to fix my code and/or my math.
+document.getElementById("sample").innerHTML = sample
+document.getElementById("yes").innerHTML = "CHANGED and won: " + yes
+document.getElementById("no").innerHTML = "DID NOT CHANGE and won: " + no
 
 </script>
