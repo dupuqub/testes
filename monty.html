@@ -1,0 +1,37 @@
+
+<script>
+
+// Monty Hall problem.
+
+const roll = (a, b) => Math.floor(Math.random() * (b - a + 1))
+
+const sample = 100000
+let yes = 0
+let no = 0
+
+for(i = sample; i > 0; i --){
+
+	const doors = ["a","b","c"]
+	const car = roll(0,2) // where the car will be found.
+	const first = roll(0,2) // the fictional player first selected door. 
+	const other_doors = doors.filter((door, index) => index !== first) // the doors that weren't selected.
+	const shown = roll(0,1) // the door that is open to show there is no car there.
+	const final_doors = [doors[first], other_doors[shown ? 0 : 1]] // the first door the fictional player selected and the remaining closed door.
+	const change = roll(0,1) // if the player changed or not his mind.
+	const final = change ? other_doors[shown ? 0 : 1] : doors[first] // the player's final decision.
+	const winner = doors[car] === final // if the player won or not.
+
+	if(winner) change ? yes ++ : no ++ // if the player WON, give a point to YES if there was a change or to NO if there wasn't a change.
+
+	// uncomment the line below (and REDUCE SAMPLE to not overcrowd your console, 10 to 100 should be enough) to check the validity of the processes above.
+	// console.log(doors + " . " + doors[first] + " . " + other_doors + " . " + other_doors[shown] + " . " + final_doors + " . " + change + " . " + final + " . car:" + doors[car] + " . winner:" + winner)
+}
+
+console.log("people that CHANGED and won:" + yes + "\npeople that DID NOT CHANGE and won:" + no)
+
+// I AM NOT AN EXPERT, but this is my best effort in providing some clarity on the matter.
+// for a sample of 100000 (one hundred thousand) plays, you will observe there is a VERY BALANCED distribution of wins for both sides.
+// this code is used to provide clear results not based on opinion, but on maths.
+// if any concerns or bugs arise, please contact me. I would be pleased to fix my code and/or my math.
+
+</script>
