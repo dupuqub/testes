@@ -10,44 +10,46 @@
 // Monty Hall problem.
 
 const roll = (a, b) => Math.floor(Math.random() * (b - a + 1))
-
 const sample = 100000
 let yes = 0
 let no = 0
 
 for(i = sample; i > 0; i --){
 
-	const doors = ["a","b","c"]
+    const doors = ["a","b","c"]
 
-	// where the car will be found.
-	const car = roll(0,2)
+    // the door where the car is
+    const car = doors[roll(0, 2)]
 
-	// the fictional player first selected door.
-	const first = roll(0,2)
-	
-	// the doors that weren't selected.
-	const other_doors = doors.filter((door, index) => index !== first)
-	
-	// the door that is open to show there is no car there.
-	const shown = roll(0,1) 
-	
-	// the first door the fictional player selected and the remaining closed door (just for debug purposes)
-	const final_doors = [doors[first], other_doors[shown ? 0 : 1]]	
-	
-	// if the player changed or not his mind.
-	const change = roll(0,1)
-	
-	// the player's final decision.
-	const final = change ? other_doors[shown ? 0 : 1] : doors[first]
-	
-	// if the player won or not.
-	const winner = doors[car] === final
+    // the fictional player's first selected door
+    const first = doors[roll(0, 2)]
 
-	// if the player WON, give a point to YES if there was a change or to NO if there wasn't a change.
-	if(winner) change ? yes ++ : no ++
+    // the doors that weren't selected
+    const other_doors = doors.filter(door => door !== first)
 
-	// uncomment the line below (and REDUCE SAMPLE to not overcrowd your console, 10 to 100 should be enough) to check the validity of the processes above.
-	// console.log(doors + " . " + doors[first] + " . " + other_doors + " . " + other_doors[shown] + " . " + final_doors + " . " + change + " . " + final + " . car:" + doors[car] + " . winner:" + winner)
+    // the doors that can be shown where there is no car
+    const showable = other_doors.filter(door => door !== car)
+
+    // the door that is opened to show there is no car there.
+    const shown = showable[roll(0, showable.length - 1)]
+
+    // the door that was not first selected and was not opened
+    const closed = doors.filter(door => door !== first && door !== shown)[0];
+
+    // the first door the fictional player selected and the remaining closed door.
+    const final_doors = [first, closed]
+
+    // if the player changed or not his mind.
+    const change = roll(0, 1)
+
+    // the player's final decision.
+    const final = change ? closed : first
+
+    // if the player won or not.
+    const winner = car === final
+
+    // if the player WON, give a point to YES if there was a change or to NO if there wasn't a change.
+    if(winner) change ? yes ++ : no ++
 }
 
 document.getElementById("sample").innerHTML = sample
